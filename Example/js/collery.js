@@ -1,6 +1,10 @@
 // Collery created by Rafael Fernandez (rafaeldesign.be)
-// version 0.0.1 (05-07-2017)
+// Copyright 2017 Rafael Fernandez
+// Created on 05-07-2017
+// version 0.2 (20-08-2017)
+// define variables
 var index;
+var totalIndex;
 var imgTop;
 var windowTop;
 var imgLeft;
@@ -17,18 +21,18 @@ var imgTitle;
 var total;
 var open = false;
 
-function getPosition() {
-    // get top position of image (Y-axis) in viewport
-        imgTop = $('.collery').eq(window.index).offset().top;
+function getPosition() { // gets the positions and widths of image and viewport
+        // get top position of image (Y-axis) in viewport
+        imgTop = $('.collery').eq(window.totalIndex).offset().top;
         windowTop = imgTop - $(window).scrollTop();
         
         // get left position of image (X-axis) in viewport
-        imgLeft = $('.collery').eq(window.index).offset().left;
+        imgLeft = $('.collery').eq(window.totalIndex).offset().left;
         windowLeft = imgLeft - $(window).scrollLeft();
         
         // get width and height of image in viewport
-        imgWidth = $('.collery').eq(window.index).width();
-        imgHeight = $('.collery').eq(window.index).height();
+        imgWidth = $('.collery').eq(window.totalIndex).width();
+        imgHeight = $('.collery').eq(window.totalIndex).height();
         
         // get viewport width
         viewportWidth = $(window).width();
@@ -37,18 +41,28 @@ function getPosition() {
         viewportHeight = $(window).height();
 };
 
-function loadImage(){
-    // get link to zoomed in image
-        imgSrc = $('.collery').eq(window.index).parent().attr("href");
+function loadImage(){ // load the image and interface
+        // get link to zoomed in image
+        imgSrc = $('.collery').eq(window.totalIndex).parent().attr("href");
+        
+        // if there is no link to another image, it displays the image itself in zoom
+        if(imgSrc == undefined){
+            imgSrc = $('.collery').eq(window.totalIndex).attr("src");
+        }
         
         // get background color
-        imgColor = $('.collery').eq(window.index).data("collery-color");
+        imgColor = $('.collery').eq(window.totalIndex).data("collery-color");
+        // if no color is given, defaults to black
+        if(imgColor == undefined){
+            imgColor = '#000000';
+        }
         
-        showWidth = $('.collery').eq(window.index).data("collery-width");
-        showHeight = $('.collery').eq(window.index).data("collery-height");
+        // get the maximum resolution of the zoomed in image
+        showWidth = $('.collery').eq(window.totalIndex).data("collery-width");
+        showHeight = $('.collery').eq(window.totalIndex).data("collery-height");
     
         // get title
-        imgTitle = $('.collery').eq(window.index).attr("title");
+        imgTitle = $('.collery').eq(window.totalIndex).attr("title");
         // load image
         $('.gallery').css('background-image', 'url(' + imgSrc + ')');
         $('.cover').css('background-color', imgColor);
@@ -58,7 +72,7 @@ function loadImage(){
         
 };
 
-function scaleImage(){
+function scaleImage(){ // scale and rescale image to be responsive
     viewportWidth = $(window).width();
     viewportHeight = $(window).height();
     if(index == 0){
@@ -74,7 +88,7 @@ function scaleImage(){
         $('.next .arrow').addClass('active');
         $('.next').attr('title', 'Next (Right)');
     }
-                if(showWidth > (viewportWidth*0.8)){
+                if(showWidth > (viewportWidth*0.8)){ // scale if image is too wide
                     $('.gallery.zoom').css('width', '80%');
                     $('.gallery.zoom').css('height', ((viewportWidth*0.8)/showWidth*showHeight) + 'px');
                     $('.gallery.zoom').css('left', '10%');
@@ -83,7 +97,7 @@ function scaleImage(){
                     $('.close, .closex').css('top', (viewportHeight - ((viewportWidth*0.8)/showWidth*showHeight))/2 - 48 + 'px');
                     $('.close').css('right', (viewportWidth*0.1 + 56) + 'px');
                     $('.closex').css('right', (viewportWidth*0.1) + 'px');
-                } else if(showHeight > (viewportHeight - 120)){
+                } else if(showHeight > (viewportHeight - 120)){ // scahe if image is too long
                     $('.gallery.zoom').css('width', ((viewportHeight - 120)/showHeight*showWidth) +'px');
                     $('.gallery.zoom').css('height', (viewportHeight - 120) + 'px');
                     $('.gallery.zoom').css('left', (viewportWidth-((viewportHeight - 120)/showHeight*showWidth))/2 + 'px');
@@ -93,7 +107,7 @@ function scaleImage(){
                     $('.close').css('right', ((viewportWidth-((viewportHeight - 120)/showHeight*showWidth))/2 + 56) + 'px');
                     $('.closex').css('right', ((viewportWidth-((viewportHeight - 120)/showHeight*showWidth))/2) + 'px');
                     
-                } else {
+                } else { // scale normal centering image
                     $('.gallery.zoom').css('width', showWidth + 'px');
                     $('.gallery.zoom').css('height', showHeight + 'px');
                     $('.gallery.zoom').css('left', (viewportWidth-showWidth)/2 + 'px');
@@ -106,9 +120,12 @@ function scaleImage(){
                  
 };
 
+// resize the image responsive when resizing window
 $(window).on('resize', function(){
       scaleImage();
 });
+
+// show the image
 function showImage() {
         $('.gallery').css('top', windowTop + 'px');
         $('.gallery').css('left', windowLeft + 'px');
@@ -118,22 +135,19 @@ function showImage() {
         $('.cover').css('display', 'block');
         $('.next').css('display', 'block');
         $('.previous').css('display', 'block');
-        $('.close').css('display', 'block');
-        if(showWidth > (viewportWidth*0.8)){
-            $('.title').css('top', (viewportHeight*0.8)+68 + 'px');
-        } else {
-            $('.title').css('top', showHeight+68 + 'px');
-        }        
+        $('.close').css('display', 'block');       
         $('.title').css('display', 'block');
         setTimeout(function() {
             $('.gallery').addClass('zoom');
             $('.cover').addClass('zoom');
             $('.title').addClass('zoom');
             $('.close').addClass('zoom');
+            $('.container').addClass('zoom');
             scaleImage();
         }, 1);
 };
 
+// convert the hex to seperate rgb values
 function hexToRgb(hex) {
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     return result ? {
@@ -143,6 +157,7 @@ function hexToRgb(hex) {
     } : null;
 };
 
+// invert ui color based on background
 function textColor() {
     if((((hexToRgb(imgColor).r * 299) +
         (hexToRgb(imgColor).g * 587) +
@@ -161,11 +176,16 @@ function textColor() {
         }
 };
 
+// click of image in website
 $( document ).ready(function() {
-    total = $('ul.collery-container li').length - 1;
     $( ".collery" ).click(function(event) {
+        $(this).parents().eq(2).addClass('selected');
+        total = $('ul.collery-container.selected li').length - 1;
+        //alert('Total: ' + total);
         // get index of clicked image
-        index = $(this).index('.collery');
+        totalIndex = $(this).index('.collery');
+        index = $(this).index('ul.collery-container.selected li .collery');
+        //alert('Index: ' + index);
         getPosition();
         loadImage();
         textColor();
@@ -178,14 +198,17 @@ $( document ).ready(function() {
         
     });
     
+    // close the ui and reset values
     function close() {
         open = false;
+        $('.collery-container').removeClass('selected');
         getPosition();
         setTimeout(function() {
             $('.gallery').removeClass('zoom');
             $('.cover').removeClass('zoom');
             $('.title').removeClass('zoom');
             $('.close').removeClass('zoom');
+            $('.container').removeClass('zoom');
             $('.gallery').css('top', windowTop + 'px');
             $('.gallery').css('left', windowLeft + 'px');
             $('.gallery').css('width', imgWidth + 'px');
@@ -203,12 +226,17 @@ $( document ).ready(function() {
         }, 300);
     };
     
+    // go to previous image
     function previous() {
         if(index == 0){
             return false;
-        } else {index--;
+        } else {
+        totalIndex--;
+        index--;
         loadImage();
         showImage();
+                
+        // text refocus
         setTimeout(function() {
             $('.title').css('filter', 'blur(20px)');
             $('.title').css('opacity', '0');
@@ -223,10 +251,12 @@ $( document ).ready(function() {
         }
     };
     
+    // go to next image
     function next() {
         if(index == total){
             return false;
         } else {
+            totalIndex++;
             index++;
             loadImage();
             showImage();
@@ -245,7 +275,9 @@ $( document ).ready(function() {
         }
     };
     
-     $( ".cover" ).click(function(event) {
+    
+    // handle click events
+    $( ".cover" ).click(function(event) {
         close();
         return false;
     });
@@ -264,6 +296,7 @@ $( document ).ready(function() {
         return false;
     });
     
+    // handle keyboard events
     $("body").keydown(function(e) {
       if (open == true){
           if(e.keyCode == 37) { // left
@@ -285,21 +318,3 @@ $( document ).ready(function() {
       }
     });
 });
-
-
-/*$(function() {
-  var img1Top = $('#img1').offset().top; //get the offset top of the element
-  window.img1Window = img1Top - $(window).scrollTop(); //position of the ele w.r.t window
-  $(window).scroll(function() { //when window is scrolled
-    window.img1Window =img1Top - $(window).scrollTop();
-  });
-    
-    var img1Left = $('#img1').offset().left; //get the offset top of the element
-  window.img1WindowX = img1Left - $(window).scrollLeft(); //position of the ele w.r.t window
-  $(window).scroll(function() { //when window is scrolled
-    window.img1WindowX =img1Left - $(window).scrollLeft();
-  });
-});
-
-
-alert( "IMG " + event.target.id + " clicked. at " + window.img1Window +" top and " + window.img1WindowX + "left");*/

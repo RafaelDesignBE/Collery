@@ -1,1 +1,2 @@
 0.1 Initial creation.
+0.2 Seperate containers are seperate galleries and bug fixes.
