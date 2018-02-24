@@ -1,7 +1,7 @@
 // Collery created by Rafael Fernandez (rafaeldesign.be)
 // Copyright 2017 Rafael Fernandez
 // Created on 05-07-2017
-// version 0.2 (20-08-2017)
+// version 0.2.1 (26-08-2017)
 // define variables
 var index;
 var totalIndex;
@@ -125,6 +125,25 @@ $(window).on('resize', function(){
       scaleImage();
 });
 
+// text reload
+function textLoad() {
+    $('.title').css('opacity', '0');
+    $('.title').css('transform', 'translateY(0)');
+    $('.title').css('transition', 'none');
+    setTimeout(function() {
+        textColor();
+        $('.title').css('opacity', '0');
+        $('.title').css('transform', 'translateY(1rem)');
+        $('.title').css('transition', 'all 0.3s ease-out');
+    }, 1);
+
+    setTimeout(function() {
+        $('.title').html(imgTitle);
+        $('.title').css('transform', 'translateY(0)');
+        $('.title').css('opacity', '1');
+    }, 300);
+};
+
 // show the image
 function showImage() {
         $('.gallery').css('top', windowTop + 'px');
@@ -143,6 +162,7 @@ function showImage() {
             $('.title').addClass('zoom');
             $('.close').addClass('zoom');
             $('.container').addClass('zoom');
+            textLoad();
             scaleImage();
         }, 1);
 };
@@ -225,29 +245,18 @@ $( document ).ready(function() {
             
         }, 300);
     };
+
     
     // go to previous image
     function previous() {
         if(index == 0){
             return false;
         } else {
-        totalIndex--;
-        index--;
-        loadImage();
-        showImage();
-                
-        // text refocus
-        setTimeout(function() {
-            $('.title').css('filter', 'blur(20px)');
-            $('.title').css('opacity', '0');
-        }, 300);
-        
-        setTimeout(function() {
-            textColor();
-            $('.title').html(imgTitle);
-            $('.title').css('filter', 'blur(0)');
-            $('.title').css('opacity', '1');
-        }, 600);
+            totalIndex--;
+            index--;
+            loadImage();
+            showImage();
+            textLoad();
         }
     };
     
@@ -260,17 +269,7 @@ $( document ).ready(function() {
             index++;
             loadImage();
             showImage();
-            setTimeout(function() {
-                $('.title').css('filter', 'blur(20px)');
-                $('.title').css('opacity', '0');
-            }, 300);
-
-            setTimeout(function() {
-                textColor();
-                $('.title').html(imgTitle);
-                $('.title').css('filter', 'blur(0)');
-            $('.title').css('opacity', '1');
-            }, 600);
+            textLoad();
             return false;
         }
     };

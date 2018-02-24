@@ -1,2 +1,3 @@
 0.1 Initial creation.
 0.2 Seperate containers are seperate galleries and bug fixes.
+0.2.1 Text blur transition replaced with fade in from bottom and text display code put into own function.
