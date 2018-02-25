@@ -66,7 +66,7 @@ function loadImage(){ // load the image and interface
         // load image
         $('.gallery').css('background-image', 'url(' + imgSrc + ')');
         $('.cover').css('background-color', imgColor);
-        
+        $('.title').css('opacity', '0');
     
         
         
@@ -125,7 +125,11 @@ $(window).on('resize', function(){
       scaleImage();
 });
 
-// text reload
+// Text reload
+// You can choose between the "Fade from bottom", "Refocus" or "Fade in"
+
+
+// Fade from bottom
 function textLoad() {
     $('.title').css('opacity', '0');
     $('.title').css('transform', 'translateY(0)');
@@ -143,6 +147,36 @@ function textLoad() {
         $('.title').css('opacity', '1');
     }, 300);
 };
+
+
+// Refocus
+/*function textLoad() {
+    setTimeout(function() {
+        $('.title').css('filter', 'blur(20px)');
+        $('.title').css('opacity', '0');
+    }, 300);
+    
+    setTimeout(function() {
+    textColor();
+        $('.title').html(imgTitle);
+        $('.title').css('filter', 'blur(0)');
+        $('.title').css('opacity', '1');
+    }, 600);
+};*/
+
+// Fade in
+/*function textLoad() {
+    setTimeout(function() {
+        $('.title').css('opacity', '0');
+    }, 300);
+    
+    setTimeout(function() {
+    textColor();
+        $('.title').html(imgTitle);
+        $('.title').css('opacity', '1');
+    }, 600);
+};*/
+
 
 // show the image
 function showImage() {
