@@ -1,7 +1,11 @@
 // Collery created by Rafael Fernandez (rafaeldesign.be)
 // Copyright 2017-2018 Rafael Fernandez
 // Created on 05-07-2017
-// version 0.2.3 (23-02-2018)
+// version 0.3 (24-02-2018)
+
+// create gallery HTML
+document.write('<div class="gallery"> <div class="next"></div><div class="previous"></div></div><div class="title"></div><div class="close" title="Close (Esc)"> Close <div class="closex"> <div class="line1"></div><div class="line2"></div></div></div><div class="next"> <div class="arrow"></div></div><div class="previous"> <div class="arrow"></div></div><div class="cover"></div>');
+
 
 // define variables
 var index;
@@ -14,13 +18,16 @@ var imgWidth;
 var imgHeight;
 var showWidth;
 var showHeight;
+var showRatio;
 var viewportWidth;
 var viewportHeight;
+var showMaxRatio;
 var imgSrc;
 var imgColor;
 var imgTitle;
 var total;
 var open = false;
+
 
 function getPosition() { // gets the positions and widths of image and viewport
         // get top position of image (Y-axis) in viewport
@@ -55,13 +62,13 @@ function loadImage(){ // load the image and interface
         imgColor = $('.collery').eq(window.totalIndex).data("collery-color");
         // if no color is given, defaults to black
         if(imgColor == undefined){
-            imgColor = '#000';
+            imgColor = '#000000';
         }
         
         // get the maximum resolution of the zoomed in image
         showWidth = $('.collery').eq(window.totalIndex).data("collery-width");
         showHeight = $('.collery').eq(window.totalIndex).data("collery-height");
-    
+        
         // get title
         imgTitle = $('.collery').eq(window.totalIndex).attr("title");
         // load image
@@ -76,6 +83,10 @@ function loadImage(){ // load the image and interface
 function scaleImage(){ // scale and rescale image to be responsive
     viewportWidth = $(window).width();
     viewportHeight = $(window).height();
+    showWidth = $('.collery').eq(window.totalIndex).data("collery-width");
+    showHeight = $('.collery').eq(window.totalIndex).data("collery-height");
+    showRatio = showWidth/showHeight;
+    showMaxRatio = ((viewportWidth-120)/(viewportHeight-120));
     if(index == 0){
         $('.previous .arrow').removeClass('active');
     } else {
@@ -89,35 +100,29 @@ function scaleImage(){ // scale and rescale image to be responsive
         $('.next .arrow').addClass('active');
         $('.next').attr('title', 'Next (Right)');
     }
-    
-    if(showWidth > (viewportWidth*0.8)){ // scale if image is too wide
-        $('.gallery.zoom').css('width', '80%');
-        $('.gallery.zoom').css('height', ((viewportWidth*0.8)/showWidth*showHeight) + 'px');
-        $('.gallery.zoom').css('left', '10%');
-        $('.gallery.zoom').css('top', (viewportHeight - ((viewportWidth*0.8)/showWidth*showHeight))/2 + 'px');
-        $('.title').css('top', (viewportHeight - ((viewportWidth*0.8)/showWidth*showHeight))/2 + ((viewportWidth*0.8)/showWidth*showHeight) + 'px');
-        $('.close, .closex').css('top', (viewportHeight - ((viewportWidth*0.8)/showWidth*showHeight))/2 - 48 + 'px');
-        $('.close').css('right', (viewportWidth*0.1 + 56) + 'px');
-        $('.closex').css('right', (viewportWidth*0.1) + 'px');
-    } else if(showHeight > (viewportHeight - 120)){ // scahe if image is too long
-        $('.gallery.zoom').css('width', ((viewportHeight - 120)/showHeight*showWidth) +'px');
-        $('.gallery.zoom').css('height', (viewportHeight - 120) + 'px');
-        $('.gallery.zoom').css('left', (viewportWidth-((viewportHeight - 120)/showHeight*showWidth))/2 + 'px');
-        $('.gallery.zoom').css('top', (viewportHeight - (viewportHeight - 120))/2 + 'px');
-        $('.title').css('top', ((viewportHeight - (viewportHeight - 120))/2 + (viewportHeight - 120)) + 'px');
-        $('.close, .closex').css('top', (viewportHeight - (viewportHeight - 120))/2 - 48 + 'px');
-        $('.close').css('right', ((viewportWidth-((viewportHeight - 120)/showHeight*showWidth))/2 + 56) + 'px');
-        $('.closex').css('right', ((viewportWidth-((viewportHeight - 120)/showHeight*showWidth))/2) + 'px');
-    } else { // scale normal centering image
-        $('.gallery.zoom').css('width', showWidth + 'px');
-        $('.gallery.zoom').css('height', showHeight + 'px');
-        $('.gallery.zoom').css('left', (viewportWidth-showWidth)/2 + 'px');
-        $('.gallery.zoom').css('top', (viewportHeight - showHeight)/2 + 'px');
-        $('.title').css('top',(viewportHeight - showHeight)/2 + showHeight + 'px');
-        $('.close, .closex').css('top', (viewportHeight - showHeight)/2 - 48 + 'px');
-        $('.close').css('right', ((viewportWidth-showWidth)/2 + 56) + 'px');
-        $('.closex').css('right', ((viewportWidth-showWidth)/2) + 'px');
+
+        //showWidth = viewportWidth - 120;
+        //showHeight = viewportHeight - 120;
+    if( showMaxRatio < showRatio ){ // viewport longer than show
+        if(showWidth > (viewportWidth - 120)){
+            showWidth = (viewportWidth - 120);
+            showHeight = showWidth / showRatio;
+        }
+    } else { // viewport wider or same as show
+            if(showHeight > (viewportHeight - 120)){
+                showHeight = (viewportHeight - 120);
+                showWidth = showHeight * showRatio;
+            }
     }
+        
+    $('.gallery.zoom').css('width', showWidth + 'px');
+    $('.gallery.zoom').css('height', showHeight + 'px');
+    $('.gallery.zoom').css('left', (viewportWidth-showWidth)/2 + 'px');
+    $('.gallery.zoom').css('top', (viewportHeight - showHeight)/2 + 'px');
+    $('.title').css('top',(viewportHeight - showHeight)/2 + showHeight + 'px');
+    $('.close, .closex').css('top', (viewportHeight - showHeight)/2 - 48 + 'px');
+    $('.close').css('right', ((viewportWidth-showWidth)/2 + 56) + 'px');
+    $('.closex').css('right', ((viewportWidth-showWidth)/2) + 'px');
                  
 };
 
@@ -126,9 +131,8 @@ $(window).on('resize', function(){
       scaleImage();
 });
 
-// Text reload
+// TEXT RELOAD EFFECTS 
 // You can choose between the "Fade from bottom", "Refocus" or "Fade in"
-
 
 // Fade from bottom
 function textLoad() {
@@ -148,6 +152,8 @@ function textLoad() {
         $('.title').css('opacity', '1');
     }, 300);
 };
+
+
 
 
 // Refocus
@@ -177,6 +183,8 @@ function textLoad() {
         $('.title').css('opacity', '1');
     }, 600);
 };*/
+
+// END TEXT RELOAD EFFECTS
 
 
 // show the image
@@ -234,12 +242,31 @@ function textColor() {
 // click of image in website
 $( document ).ready(function() {
     $( ".collery" ).click(function(event) {
-        $(this).parents().eq(2).addClass('selected');
-        total = $('ul.collery-container.selected li').length - 1;
-        //alert('Total: ' + total);
+        //$(this).parents().eq(2).addClass('selected'); // in case collery-container is two levels higher (ex. ul>li>a>img)
+        
+
+        /*if(total == -1){ // in case the collery-container is only one level higher than img (ex. div>a>li)
+            $(this).parents().eq(2).removeClass('selected');
+            $(this).parents().eq(1).addClass('selected');
+            total = $('.collery-container.selected a img.collery').length - 1;
+            alert("level 1");
+        }*/
+
+
+        $(this).closest( '.collery-container' ).addClass('selected');
+        total = $('.collery-container.selected a img.collery').length - 1;
+        
         // get index of clicked image
         totalIndex = $(this).index('.collery');
-        index = $(this).index('ul.collery-container.selected li .collery');
+        index = $(this).index('.collery-container.selected a img.collery');
+
+
+        // for single image (without collery-container)
+        if(total == -1){
+            total = 0;
+            index = 0;
+        }
+        //alert('Total: ' + total);
         //alert('Index: ' + index);
         getPosition();
         loadImage();
