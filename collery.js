@@ -1,7 +1,8 @@
 // Collery created by Rafael Fernandez (rafaeldesign.be)
-// Copyright 2017 Rafael Fernandez
+// Copyright 2017-2018 Rafael Fernandez
 // Created on 05-07-2017
-// version 0.2.1 (26-08-2017)
+// version 0.2.3 (23-02-2018)
+
 // define variables
 var index;
 var totalIndex;
@@ -54,7 +55,7 @@ function loadImage(){ // load the image and interface
         imgColor = $('.collery').eq(window.totalIndex).data("collery-color");
         // if no color is given, defaults to black
         if(imgColor == undefined){
-            imgColor = '#000000';
+            imgColor = '#000';
         }
         
         // get the maximum resolution of the zoomed in image
@@ -88,35 +89,35 @@ function scaleImage(){ // scale and rescale image to be responsive
         $('.next .arrow').addClass('active');
         $('.next').attr('title', 'Next (Right)');
     }
-                if(showWidth > (viewportWidth*0.8)){ // scale if image is too wide
-                    $('.gallery.zoom').css('width', '80%');
-                    $('.gallery.zoom').css('height', ((viewportWidth*0.8)/showWidth*showHeight) + 'px');
-                    $('.gallery.zoom').css('left', '10%');
-                    $('.gallery.zoom').css('top', (viewportHeight - ((viewportWidth*0.8)/showWidth*showHeight))/2 + 'px');
-                    $('.title').css('top', (viewportHeight - ((viewportWidth*0.8)/showWidth*showHeight))/2 + ((viewportWidth*0.8)/showWidth*showHeight) + 'px');
-                    $('.close, .closex').css('top', (viewportHeight - ((viewportWidth*0.8)/showWidth*showHeight))/2 - 48 + 'px');
-                    $('.close').css('right', (viewportWidth*0.1 + 56) + 'px');
-                    $('.closex').css('right', (viewportWidth*0.1) + 'px');
-                } else if(showHeight > (viewportHeight - 120)){ // scahe if image is too long
-                    $('.gallery.zoom').css('width', ((viewportHeight - 120)/showHeight*showWidth) +'px');
-                    $('.gallery.zoom').css('height', (viewportHeight - 120) + 'px');
-                    $('.gallery.zoom').css('left', (viewportWidth-((viewportHeight - 120)/showHeight*showWidth))/2 + 'px');
-                    $('.gallery.zoom').css('top', (viewportHeight - (viewportHeight - 120))/2 + 'px');
-                    $('.title').css('top', ((viewportHeight - (viewportHeight - 120))/2 + (viewportHeight - 120)) + 'px');
-                    $('.close, .closex').css('top', (viewportHeight - (viewportHeight - 120))/2 - 48 + 'px');
-                    $('.close').css('right', ((viewportWidth-((viewportHeight - 120)/showHeight*showWidth))/2 + 56) + 'px');
-                    $('.closex').css('right', ((viewportWidth-((viewportHeight - 120)/showHeight*showWidth))/2) + 'px');
-                    
-                } else { // scale normal centering image
-                    $('.gallery.zoom').css('width', showWidth + 'px');
-                    $('.gallery.zoom').css('height', showHeight + 'px');
-                    $('.gallery.zoom').css('left', (viewportWidth-showWidth)/2 + 'px');
-                    $('.gallery.zoom').css('top', (viewportHeight - showHeight)/2 + 'px');
-                    $('.title').css('top',(viewportHeight - showHeight)/2 + showHeight + 'px');
-                    $('.close, .closex').css('top', (viewportHeight - showHeight)/2 - 48 + 'px');
-                    $('.close').css('right', ((viewportWidth-showWidth)/2 + 56) + 'px');
-                    $('.closex').css('right', ((viewportWidth-showWidth)/2) + 'px');
-                }
+    
+    if(showWidth > (viewportWidth*0.8)){ // scale if image is too wide
+        $('.gallery.zoom').css('width', '80%');
+        $('.gallery.zoom').css('height', ((viewportWidth*0.8)/showWidth*showHeight) + 'px');
+        $('.gallery.zoom').css('left', '10%');
+        $('.gallery.zoom').css('top', (viewportHeight - ((viewportWidth*0.8)/showWidth*showHeight))/2 + 'px');
+        $('.title').css('top', (viewportHeight - ((viewportWidth*0.8)/showWidth*showHeight))/2 + ((viewportWidth*0.8)/showWidth*showHeight) + 'px');
+        $('.close, .closex').css('top', (viewportHeight - ((viewportWidth*0.8)/showWidth*showHeight))/2 - 48 + 'px');
+        $('.close').css('right', (viewportWidth*0.1 + 56) + 'px');
+        $('.closex').css('right', (viewportWidth*0.1) + 'px');
+    } else if(showHeight > (viewportHeight - 120)){ // scahe if image is too long
+        $('.gallery.zoom').css('width', ((viewportHeight - 120)/showHeight*showWidth) +'px');
+        $('.gallery.zoom').css('height', (viewportHeight - 120) + 'px');
+        $('.gallery.zoom').css('left', (viewportWidth-((viewportHeight - 120)/showHeight*showWidth))/2 + 'px');
+        $('.gallery.zoom').css('top', (viewportHeight - (viewportHeight - 120))/2 + 'px');
+        $('.title').css('top', ((viewportHeight - (viewportHeight - 120))/2 + (viewportHeight - 120)) + 'px');
+        $('.close, .closex').css('top', (viewportHeight - (viewportHeight - 120))/2 - 48 + 'px');
+        $('.close').css('right', ((viewportWidth-((viewportHeight - 120)/showHeight*showWidth))/2 + 56) + 'px');
+        $('.closex').css('right', ((viewportWidth-((viewportHeight - 120)/showHeight*showWidth))/2) + 'px');
+    } else { // scale normal centering image
+        $('.gallery.zoom').css('width', showWidth + 'px');
+        $('.gallery.zoom').css('height', showHeight + 'px');
+        $('.gallery.zoom').css('left', (viewportWidth-showWidth)/2 + 'px');
+        $('.gallery.zoom').css('top', (viewportHeight - showHeight)/2 + 'px');
+        $('.title').css('top',(viewportHeight - showHeight)/2 + showHeight + 'px');
+        $('.close, .closex').css('top', (viewportHeight - showHeight)/2 - 48 + 'px');
+        $('.close').css('right', ((viewportWidth-showWidth)/2 + 56) + 'px');
+        $('.closex').css('right', ((viewportWidth-showWidth)/2) + 'px');
+    }
                  
 };
 
@@ -216,17 +217,17 @@ function textColor() {
     if((((hexToRgb(imgColor).r * 299) +
         (hexToRgb(imgColor).g * 587) +
         (hexToRgb(imgColor).b * 114))/1000) > 160 ){
-            $('.title').css('color', '#000000');
-            $('.close').css('color', '#000000');
-            $('.closex .line1, .closex .line2').css('background-color', '#000000');
-            $('.previous .arrow').css('border-right', '1.25rem solid #000000');
-            $('.next .arrow').css('border-left', '1.25rem solid #000000');
+            $('.title').css('color', '#000');
+            $('.close').css('color', '#000');
+            $('.closex .line1, .closex .line2').css('background-color', '#000');
+            $('.previous .arrow').css('border-right', '1.25rem solid #000');
+            $('.next .arrow').css('border-left', '1.25rem solid #000');
         } else {
-            $('.title').css('color', '#ffffff');
-            $('.close').css('color', '#ffffff');
-            $('.closex .line1, .closex .line2').css('background-color', '#ffffff');
-            $('.previous .arrow').css('border-right', '1.25rem solid #ffffff');
-            $('.next .arrow').css('border-left', '1.25rem solid #ffffff');
+            $('.title').css('color', '#fff');
+            $('.close').css('color', '#fff');
+            $('.closex .line1, .closex .line2').css('background-color', '#fff');
+            $('.previous .arrow').css('border-right', '1.25rem solid #fff');
+            $('.next .arrow').css('border-left', '1.25rem solid #fff');
         }
 };
 
@@ -330,7 +331,7 @@ $( document ).ready(function() {
     });
     
     // handle keyboard events
-    $("body").keydown(function(e) {
+    $( "body" ).keydown(function(e) {
       if (open == true){
           if(e.keyCode == 37) { // left
             previous();
