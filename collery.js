@@ -1,7 +1,5 @@
 // Collery created by Rafael Fernandez (rafaeldesign.be)
-// Copyright 2017-2018 Rafael Fernandez
 // Created on 05-07-2017
-// version 0.3 (24-02-2018)
 
 // create gallery HTML
 document.write('<div class="gallery"> <div class="next"></div><div class="previous"></div></div><div class="title"></div><div class="close" title="Close (Esc)"> Close <div class="closex"> <div class="line1"></div><div class="line2"></div></div></div><div class="next"> <div class="arrow"></div></div><div class="previous"> <div class="arrow"></div></div><div class="cover"></div>');
