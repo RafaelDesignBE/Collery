@@ -28,7 +28,6 @@ var imgTitle;
 var total;
 var open = false;
 
-
 function getPosition() { // gets the positions and widths of image and viewport
         // get top position of image (Y-axis) in viewport
         imgTop = document.querySelectorAll('.collery')[window.totalIndex].offsetTop;
@@ -62,7 +61,7 @@ function getPosition() { // gets the positions and widths of image and viewport
 
 function loadImage(){ // load the image and interface
         // get link to zoomed in image
-        imgSrc = $('.collery').eq(window.totalIndex).parent().attr("href");
+        imgSrc = document.querySelectorAll('.collery')[window.totalIndex].parentElement.getAttribute("href");
         
         // if there is no link to another image, it displays the image itself in zoom
         if(imgSrc == undefined){
@@ -70,22 +69,22 @@ function loadImage(){ // load the image and interface
         }
         
         // get background color
-        imgColor = $('.collery').eq(window.totalIndex).data("collery-color");
+        imgColor = document.querySelectorAll('.collery')[window.totalIndex].getAttribute("data-collery-color");
         // if no color is given, defaults to black
         if(imgColor == undefined){
             imgColor = '#000000';
         }
         
         // get the maximum resolution of the zoomed in image
-        showWidth = $('.collery').eq(window.totalIndex).data("collery-width");
-        showHeight = $('.collery').eq(window.totalIndex).data("collery-height");
+        showWidth = document.querySelectorAll('.collery')[window.totalIndex].getAttribute("data-collery-width");
+        showHeight = document.querySelectorAll('.collery')[window.totalIndex].getAttribute("data-collery-height");
         
         // get title
-        imgTitle = $('.collery').eq(window.totalIndex).attr("title");
+        imgTitle = document.querySelectorAll('.collery')[window.totalIndex].getAttribute("title");
         // load image
-        $('.gallery').css('background-image', 'url(' + imgSrc + ')');
-        $('.cover').css('background-color', imgColor);
-        $('.title').css('opacity', '0');
+        document.querySelector('.gallery').style.backgroundImage = 'url(' + imgSrc + ')';
+        document.querySelector('.cover').style.backgroundColor = imgColor;
+        document.querySelector('.title').style.opacity = '0';
     
         
         
