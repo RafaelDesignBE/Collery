@@ -235,17 +235,19 @@ function textColor() {
     if((((hexToRgb(imgColor).r * 299) +
         (hexToRgb(imgColor).g * 587) +
         (hexToRgb(imgColor).b * 114))/1000) > 160 ){
-            $('.title').css('color', '#000');
-            $('.close').css('color', '#000');
-            $('.closex .line1, .closex .line2').css('background-color', '#000');
-            $('.previous .arrow').css('border-right', '1.25rem solid #000');
-            $('.next .arrow').css('border-left', '1.25rem solid #000');
+            document.querySelector('.title').style.color = "#000";
+            document.querySelector('.close').style.color = "#000";
+            document.querySelector('.closex .line1').style.backgroundColor = "#000";
+            document.querySelector('.closex .line2').style.backgroundColor = "#000";
+            document.querySelector('.previous .arrow').style.borderRight = "1.25rem solid #000";
+            document.querySelector('.next .arrow').style.borderLeft = "1.25rem solid #000";
         } else {
-            $('.title').css('color', '#fff');
-            $('.close').css('color', '#fff');
-            $('.closex .line1, .closex .line2').css('background-color', '#fff');
-            $('.previous .arrow').css('border-right', '1.25rem solid #fff');
-            $('.next .arrow').css('border-left', '1.25rem solid #fff');
+            document.querySelector('.title').style.color = "#fff";
+            document.querySelector('.close').style.color = "#fff";
+            document.querySelector('.closex .line1').style.backgroundColor = "#fff";
+            document.querySelector('.closex .line2').style.backgroundColor = "#fff";
+            document.querySelector('.previous .arrow').style.borderRight = "1.25rem solid #fff";
+            document.querySelector('.next .arrow').style.borderLeft = "1.25rem solid #fff";
         }
 };
 
