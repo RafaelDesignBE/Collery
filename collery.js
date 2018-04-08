@@ -91,24 +91,26 @@ function loadImage(){ // load the image and interface
 };
 
 function scaleImage(){ // scale and rescale image to be responsive
-    viewportWidth = $(window).width();
-    viewportHeight = $(window).height();
-    showWidth = $('.collery').eq(window.totalIndex).data("collery-width");
-    showHeight = $('.collery').eq(window.totalIndex).data("collery-height");
+    viewportWidth = document.documentElement.clientWidth;
+    viewportHeight = document.documentElement.clientHeight;
+    showWidth = parseInt(document.querySelectorAll('.collery')[window.totalIndex].getAttribute("data-collery-width"));
+    showHeight = parseInt(document.querySelectorAll('.collery')[window.totalIndex].getAttribute("data-collery-height"));
     showRatio = showWidth/showHeight;
     showMaxRatio = ((viewportWidth-120)/(viewportHeight-120));
     if(index == 0){
-        $('.previous .arrow').removeClass('active');
+        document.querySelector('.previous .arrow').classList.remove("active");
     } else {
-        $('.previous .arrow').addClass('active');
-        $('.previous').attr('title', 'Previous (Left)');
+        document.querySelector('.previous .arrow').classList.add("active");
+        document.querySelectorAll('.previous')[0].setAttribute('title', "Previous (Left)");
+        document.querySelectorAll('.previous')[1].setAttribute('title', "Previous (Left)");
     }
     
     if(index == total){
-        $('.next .arrow').removeClass('active');
+        document.querySelector('.next .arrow').classList.remove("active");
     } else {
-        $('.next .arrow').addClass('active');
-        $('.next').attr('title', 'Next (Right)');
+        document.querySelector('.next .arrow').classList.add("active");
+        document.querySelectorAll('.next')[0].setAttribute('title', "Next (Right)");
+        document.querySelectorAll('.next')[1].setAttribute('title', "Next (Right)");
     }
 
         //showWidth = viewportWidth - 120;
@@ -117,6 +119,7 @@ function scaleImage(){ // scale and rescale image to be responsive
         if(showWidth > (viewportWidth - 120)){
             showWidth = (viewportWidth - 120);
             showHeight = showWidth / showRatio;
+            
         }
     } else { // viewport wider or same as show
             if(showHeight > (viewportHeight - 120)){
@@ -124,16 +127,16 @@ function scaleImage(){ // scale and rescale image to be responsive
                 showWidth = showHeight * showRatio;
             }
     }
-        
-    $('.gallery.zoom').css('width', showWidth + 'px');
-    $('.gallery.zoom').css('height', showHeight + 'px');
-    $('.gallery.zoom').css('left', (viewportWidth-showWidth)/2 + 'px');
-    $('.gallery.zoom').css('top', (viewportHeight - showHeight)/2 + 'px');
-    $('.title').css('top',(viewportHeight - showHeight)/2 + showHeight + 'px');
-    $('.close, .closex').css('top', (viewportHeight - showHeight)/2 - 48 + 'px');
-    $('.close').css('right', ((viewportWidth-showWidth)/2 + 56) + 'px');
-    $('.closex').css('right', ((viewportWidth-showWidth)/2) + 'px');
-                 
+    
+    document.querySelector('.gallery.zoom').style.width = showWidth + 'px';
+    document.querySelector('.gallery.zoom').style.height = showHeight + 'px';
+    document.querySelector('.gallery.zoom').style.left = (viewportWidth-showWidth)/2 + 'px';
+    document.querySelector('.gallery.zoom').style.top = (viewportHeight - showHeight)/2 + 'px';
+    document.querySelector('.title').style.top = (viewportHeight - showHeight)/2 + showHeight + 'px';
+    document.querySelector('.close').style.top = (viewportHeight - showHeight)/2 - 48 + 'px';
+    document.querySelector('.closex').style.top = (viewportHeight - showHeight)/2 - 48 + 'px';
+    document.querySelector('.close').style.right = ((viewportWidth-showWidth)/2 + 56) + 'px';
+    document.querySelector('.closex').style.right = ((viewportWidth-showWidth)/2) + 'px';
 };
 
 // resize the image responsive when resizing window
