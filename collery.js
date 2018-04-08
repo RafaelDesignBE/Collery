@@ -8,6 +8,8 @@ document.write('<div class="gallery"> <div class="next"></div><div class="previo
 // define variables
 var index;
 var totalIndex;
+var scrolledY;
+var scrolledX;
 var imgTop;
 var windowTop;
 var imgLeft;
@@ -29,22 +31,33 @@ var open = false;
 
 function getPosition() { // gets the positions and widths of image and viewport
         // get top position of image (Y-axis) in viewport
-        imgTop = $('.collery').eq(window.totalIndex).offset().top;
-        windowTop = imgTop - $(window).scrollTop();
+        imgTop = document.querySelectorAll('.collery')[window.totalIndex].offsetTop;
+        
+        scrolledY = (window.pageYOffset || window.scrollTop)  - (window.clientTop || 0);
+        if(isNaN(scrolledY)){
+            scrolledY = 0;
+        }
+
+        windowTop = imgTop - scrolledY;
+        
         
         // get left position of image (X-axis) in viewport
-        imgLeft = $('.collery').eq(window.totalIndex).offset().left;
-        windowLeft = imgLeft - $(window).scrollLeft();
+        imgLeft = document.querySelectorAll('.collery')[window.totalIndex].offsetLeft;
+        scrolledX = (window.pageXOffset || window.scrollX)  - (window.clientLeft || 0);
+        if(isNaN(scrolledX)){
+            scrolledX = 0;
+        }
+        windowLeft = imgLeft - scrolledX;
         
         // get width and height of image in viewport
-        imgWidth = $('.collery').eq(window.totalIndex).width();
-        imgHeight = $('.collery').eq(window.totalIndex).height();
+        imgWidth = document.querySelectorAll('.collery')[window.totalIndex].clientWidth;
+        imgHeight = document.querySelectorAll('.collery')[window.totalIndex].clientHeight;
         
         // get viewport width
-        viewportWidth = $(window).width();
+        viewportWidth = window.clientWidth;
     
         // get viewport height
-        viewportHeight = $(window).height();
+        viewportHeight = window.clientHeight;
 };
 
 function loadImage(){ // load the image and interface
@@ -53,7 +66,7 @@ function loadImage(){ // load the image and interface
         
         // if there is no link to another image, it displays the image itself in zoom
         if(imgSrc == undefined){
-            imgSrc = $('.collery').eq(window.totalIndex).attr("src");
+            imgSrc = document.querySelectorAll('.collery')[window.totalIndex].getAttribute("src");
         }
         
         // get background color
