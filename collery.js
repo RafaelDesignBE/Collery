@@ -149,51 +149,48 @@ window.onresize = function(){
 
 // Fade from bottom
 function textLoad() {
-    $('.title').css('opacity', '0');
-    $('.title').css('transform', 'translateY(0)');
-    $('.title').css('transition', 'none');
+    document.querySelector('.title').style.opacity = "0";
+    document.querySelector('.title').style.transform = "translateY(0)";
+    document.querySelector('.title').style.transition = "none";
     setTimeout(function() {
         textColor();
-        $('.title').css('opacity', '0');
-        $('.title').css('transform', 'translateY(1rem)');
-        $('.title').css('transition', 'all 0.3s ease-out');
+        document.querySelector('.title').style.opacity = "0";
+        document.querySelector('.title').style.transform = "translateY(1rem)";
+        document.querySelector('.title').style.transition = "all 0.3s ease-out";
     }, 1);
 
     setTimeout(function() {
-        $('.title').html(imgTitle);
-        $('.title').css('transform', 'translateY(0)');
-        $('.title').css('opacity', '1');
+        document.querySelector('.title').innerHTML = imgTitle;
+        document.querySelector('.title').style.transform = "translateY(0)";
+        document.querySelector('.title').style.opacity = "1";
     }, 300);
 };
-
-
-
 
 // Refocus
 /*function textLoad() {
     setTimeout(function() {
-        $('.title').css('filter', 'blur(20px)');
-        $('.title').css('opacity', '0');
+        document.querySelector('.title').style.filter = "blur(20px)";
+        document.querySelector('.title').style.opacity = "0";
     }, 300);
     
     setTimeout(function() {
     textColor();
-        $('.title').html(imgTitle);
-        $('.title').css('filter', 'blur(0)');
-        $('.title').css('opacity', '1');
+        document.querySelector('.title').innerHTML = imgTitle;
+        document.querySelector('.title').style.filter = "blur(0)";
+        document.querySelector('.title').style.opacity = "1";
     }, 600);
 };*/
 
 // Fade in
 /*function textLoad() {
     setTimeout(function() {
-        $('.title').css('opacity', '0');
+        document.querySelector('.title').style.opacity = "0";
     }, 300);
     
     setTimeout(function() {
     textColor();
-        $('.title').html(imgTitle);
-        $('.title').css('opacity', '1');
+        document.querySelector('.title').innerHTML = imgTitle;
+        document.querySelector('.title').style.opacity = "1";
     }, 600);
 };*/
 
