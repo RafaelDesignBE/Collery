@@ -28,9 +28,23 @@ var imgTitle;
 var total;
 var open = false;
 
+function getElPos(element) {
+    var xPosition = 0;
+    var yPosition = 0;
+
+    while(element) {
+        xPosition += (element.offsetLeft - element.scrollLeft + element.clientLeft);
+        yPosition += (element.offsetTop - element.scrollTop + element.clientTop);
+        element = element.offsetParent;
+    }
+
+    return [xPosition, yPosition];
+}
+
 function getPosition() { // gets the positions and widths of image and viewport
         // get top position of image (Y-axis) in viewport
-        imgTop = document.querySelectorAll('.collery')[window.totalIndex].offsetTop;
+        var elPos = getElPos( document.querySelectorAll('.collery')[window.totalIndex] );
+        imgTop = elPos[1];
         
         scrolledY = (window.pageYOffset || window.scrollTop)  - (window.clientTop || 0);
         if(isNaN(scrolledY)){
@@ -41,7 +55,7 @@ function getPosition() { // gets the positions and widths of image and viewport
         
         
         // get left position of image (X-axis) in viewport
-        imgLeft = document.querySelectorAll('.collery')[window.totalIndex].offsetLeft;
+        imgLeft = elPos[0];
         scrolledX = (window.pageXOffset || window.scrollX)  - (window.clientLeft || 0);
         if(isNaN(scrolledX)){
             scrolledX = 0;
