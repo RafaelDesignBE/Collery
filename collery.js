@@ -199,22 +199,24 @@ function textLoad() {
 
 // show the image
 function showImage() {
-        $('.gallery').css('top', windowTop + 'px');
-        $('.gallery').css('left', windowLeft + 'px');
-        $('.gallery').css('width', imgWidth + 'px');
-        $('.gallery').css('height', imgHeight + 'px');
-        $('.gallery').css('display', 'block');
-        $('.cover').css('display', 'block');
-        $('.next').css('display', 'block');
-        $('.previous').css('display', 'block');
-        $('.close').css('display', 'block');       
-        $('.title').css('display', 'block');
+        document.querySelector('.gallery').style.top = windowTop + 'px';
+        document.querySelector('.gallery').style.left = windowLeft + 'px';
+        document.querySelector('.gallery').style.width = imgWidth + 'px';
+        document.querySelector('.gallery').style.height = imgHeight + 'px';
+        document.querySelector('.gallery').style.display = 'block';
+        document.querySelector('.cover').style.display = 'block';
+        document.querySelectorAll('.next')[0].style.display = 'block';
+        document.querySelectorAll('.next')[1].style.display = 'block';
+        document.querySelectorAll('.previous')[0].style.display = 'block';
+        document.querySelectorAll('.previous')[1].style.display = 'block';
+        document.querySelector('.close').style.display = 'block'; 
+        document.querySelector('.title').style.display = 'block';
         setTimeout(function() {
-            $('.gallery').addClass('zoom');
-            $('.cover').addClass('zoom');
-            $('.title').addClass('zoom');
-            $('.close').addClass('zoom');
-            $('.container').addClass('zoom');
+            document.querySelector('.gallery').classList.add("zoom");
+            document.querySelector('.cover').classList.add("zoom");
+            document.querySelector('.title').classList.add("zoom");
+            document.querySelector('.close').classList.add("zoom");
+            document.querySelector('.container').classList.add("zoom");
             textLoad();
             scaleImage();
         }, 1);
@@ -251,11 +253,32 @@ function textColor() {
         }
 };
 
+
+function getIndex(e){
+    var es = document.querySelectorAll( ".collery-container.selected .collery" );
+    var index = -1;
+    for (var i = 0; i < es.length; i++) {
+        if(e == es[i]){
+            index = i;
+        }
+    }
+    return index;
+} 
+
 // click of image in website
-$( document ).ready(function() {
-    $( ".collery" ).click(function(event) {
+document.addEventListener("DOMContentLoaded", function(event) { 
+    var colleryAll = document.querySelectorAll( ".collery" );
+    for (var i = 0; i < colleryAll.length; i++) {
+        colleryAll[i].addEventListener('click', function(event) {
+            event.preventDefault();
+            
         //$(this).parents().eq(2).addClass('selected'); // in case collery-container is two levels higher (ex. ul>li>a>img)
-        
+        var colleryInd = document.querySelectorAll( ".collery" );
+        for (var i = 0; i < colleryInd.length; i++) {
+            if(this == colleryInd[i]){
+                window.totalIndex = i;
+            }
+        }
 
         /*if(total == -1){ // in case the collery-container is only one level higher than img (ex. div>a>li)
             $(this).parents().eq(2).removeClass('selected');
@@ -263,18 +286,16 @@ $( document ).ready(function() {
             total = $('.collery-container.selected a img.collery').length - 1;
             alert("level 1");
         }*/
-
-
-        $(this).closest( '.collery-container' ).addClass('selected');
-        total = $('.collery-container.selected a img.collery').length - 1;
+        if(this.closest( '.collery-container' )){
+            this.closest( '.collery-container' ).classList.add("selected");
+        } 
         
+        window.total = document.querySelectorAll('.collery-container.selected a img.collery').length - 1;
         // get index of clicked image
-        totalIndex = $(this).index('.collery');
-        index = $(this).index('.collery-container.selected a img.collery');
-
-
+        //window.totalIndex = colleryAll.length -1;
+        index = getIndex(this);
         // for single image (without collery-container)
-        if(total == -1){
+        if(window.total == -1 || isNaN(window.total)){
             total = 0;
             index = 0;
         }
@@ -283,39 +304,44 @@ $( document ).ready(function() {
         getPosition();
         loadImage();
         textColor();
-        $('.title').html(imgTitle);
+        //document.querySelector('.title').innerHTML(imgTitle);
         showImage();
         open = true;
         // test values
         //alert('The top is: ' + windowTop + ', the left is: ' + windowLeft + ', the width is: ' + imgWidth + ', the height is: ' + imgHeight + ', source is: ' + imgSrc + ', index is: ' + index)
-        return false;
         
-    });
+        
+    }, false);
+    }
     
     // close the ui and reset values
     function close() {
         open = false;
-        $('.collery-container').removeClass('selected');
+        if(document.querySelector('.collery-container.selected')){
+            document.querySelector('.collery-container.selected').classList.remove("selected");
+        }
         getPosition();
         setTimeout(function() {
-            $('.gallery').removeClass('zoom');
-            $('.cover').removeClass('zoom');
-            $('.title').removeClass('zoom');
-            $('.close').removeClass('zoom');
-            $('.container').removeClass('zoom');
-            $('.gallery').css('top', windowTop + 'px');
-            $('.gallery').css('left', windowLeft + 'px');
-            $('.gallery').css('width', imgWidth + 'px');
-            $('.gallery').css('height', imgHeight + 'px');
+            document.querySelector('.gallery').classList.remove("zoom");
+            document.querySelector('.cover').classList.remove("zoom");
+            document.querySelector('.title').classList.remove("zoom");
+            document.querySelector('.close').classList.remove("zoom");
+            document.querySelector('.container').classList.remove("zoom");
+            document.querySelector('.gallery').style.top = windowTop + 'px';
+            document.querySelector('.gallery').style.left = windowLeft + 'px';
+            document.querySelector('.gallery').style.width = imgWidth + 'px';
+            document.querySelector('.gallery').style.height = imgHeight + 'px';
             
         }, 1);
         setTimeout(function() {
-            $('.gallery').css('display', 'none');
-            $('.close').css('display', 'none');
-            $('.next').css('display', 'none');
-            $('.previous').css('display', 'none');
-            $('.cover').css('display', 'none');
-            $('.title').css('display', 'none');
+            document.querySelector('.gallery').style.display = "none";
+            document.querySelector('.close').style.display = "none";
+            document.querySelectorAll('.next')[0].style.display = "none";
+            document.querySelectorAll('.next')[1].style.display = "none";
+            document.querySelectorAll('.previous')[0].style.display = "none";
+            document.querySelectorAll('.previous')[1].style.display = "none";
+            document.querySelector('.cover').style.display = "none";
+            document.querySelector('.title').style.display = "none";
             
         }, 300);
     };
@@ -350,44 +376,54 @@ $( document ).ready(function() {
     
     
     // handle click events
-    $( ".cover" ).click(function(event) {
+
+    document.querySelector( ".cover" ).addEventListener("click", function(event) {
         close();
         return false;
     });
-    
-    $( ".previous" ).click(function(event) {
+
+    document.querySelectorAll( ".previous" )[0].addEventListener("click", function(event) {
+        previous();
+        return false;
+    });
+    document.querySelectorAll( ".previous" )[1].addEventListener("click", function(event) {
         previous();
         return false;
     });
     
-    $( ".next" ).click(function(event) {
+    document.querySelectorAll( ".next" )[0].addEventListener("click", function(event) {
         next();
+        return false;
+    });
+    document.querySelectorAll( ".next" )[1].addEventListener("click", function(event) {
+        next();
+        return false;
     });
     
-    $( ".close" ).click(function(event) {
+    document.querySelector( ".close" ).addEventListener("click", function(event) {
         close();
         return false;
     });
     
     // handle keyboard events
-    $( "body" ).keydown(function(e) {
-      if (open == true){
-          if(e.keyCode == 37) { // left
-            previous();
-            return false;
-          }
-          else if(e.keyCode == 39) { // right
-             next();
-          }
-
-          else if(e.keyCode == 27) { // escape
-            close();
-          }
-
-          else if(e.keyCode == 13) { // enter
-            next();
-            return false;
-          }
-      }
+    window.addEventListener("keydown", function (e) {
+        if (open == true){
+            if(e.keyCode == 37) { // left
+              previous();
+              return false;
+            }
+            else if(e.keyCode == 39) { // right
+               next();
+            }
+  
+            else if(e.keyCode == 27) { // escape
+              close();
+            }
+  
+            else if(e.keyCode == 13) { // enter
+              next();
+              return false;
+            }
+        }
     });
 });
