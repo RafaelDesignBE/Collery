@@ -1,9 +1,7 @@
 // Collery created by Rafael Fernandez (rafaeldesign.be)
 // Created on 05-07-2017
-
 // create gallery HTML
 document.write('<div class="gallery"> <div class="next"></div><div class="previous"></div></div><div class="title"></div><div class="close" title="Close (Esc)"> Close <div class="closex"> <div class="line1"></div><div class="line2"></div></div></div><div class="next"> <div class="arrow"></div></div><div class="previous"> <div class="arrow"></div></div><div class="cover"></div>');
-
 
 // define variables
 var index;
@@ -28,38 +26,28 @@ var imgTitle;
 var total;
 var open = false;
 
-function getElPos(element) {
-    var xPosition = 0;
-    var yPosition = 0;
-
-    while(element) {
-        xPosition += (element.offsetLeft - element.scrollLeft + element.clientLeft);
-        yPosition += (element.offsetTop - element.scrollTop + element.clientTop);
-        element = element.offsetParent;
-    }
-
-    return [xPosition, yPosition];
-}
-
 function getPosition() { // gets the positions and widths of image and viewport
-        // get top position of image (Y-axis) in viewport
-        var elPos = getElPos( document.querySelectorAll('.collery')[window.totalIndex] );
-        imgTop = elPos[1];
-        
+        // get how much has been scrolled
+        scrolledX = (window.pageXOffset || window.scrollX)  - (window.clientLeft || 0);
         scrolledY = (window.pageYOffset || window.scrollTop)  - (window.clientTop || 0);
+
+        // if unable to get scrolled info, default to 0
+        if(isNaN(scrolledX)){
+            scrolledX = 0;
+        }
         if(isNaN(scrolledY)){
             scrolledY = 0;
         }
 
-        windowTop = imgTop - scrolledY;
-        
-        
+        // get bounding from element position
+        var elPos = document.querySelectorAll('.collery')[window.totalIndex].getBoundingClientRect();
+        // get top position of image (Y-axis) in viewport
+        imgTop = elPos.top + scrolledY;
         // get left position of image (X-axis) in viewport
-        imgLeft = elPos[0];
-        scrolledX = (window.pageXOffset || window.scrollX)  - (window.clientLeft || 0);
-        if(isNaN(scrolledX)){
-            scrolledX = 0;
-        }
+        imgLeft = elPos.left + scrolledX;
+        
+        // calculate top by subtracting scrolled from image position
+        windowTop = imgTop - scrolledY;
         windowLeft = imgLeft - scrolledX;
         
         // get width and height of image in viewport
