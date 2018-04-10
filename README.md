@@ -1,6 +1,6 @@
 # SETUP:
 
-To use the Collery Gallery plugin, you must link the collery.js (and jQuery) and collery.css files correctly.
+To use the Collery Gallery plugin, you must link the collery.js and collery.css files correctly.
 
 ## Text transitions:
 You can change the transition of the text in the collery.js file, 
