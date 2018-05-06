@@ -20,10 +20,7 @@ ul li img.portrait {
 
 /* full images preload */
 .preload {
-    background: url(../img/diamond@2x.jpg) no-repeat -9999px -9999px;
-    background: url(../img/bobafett@2x.jpg) no-repeat -9999px -9999px,
-                url(../smooth_criminal@2x.jpg) no-repeat -9999px -9999px,
-                url(../supergirl_flare@2x.jpg) no-repeat -9999px -9999px,
-                url(../waffle@2x.jpg) no-repeat -9999px -9999px,
-                url(../joan_of_arc.jpg) no-repeat -9999px -9999px;
+    background: url('../diamond_optimize.svg') no-repeat -9999px -9999px;
+    background: url('../diamond_optimize.svg') no-repeat -9999px -9999px,
+                url('../waffle_optimize.svg') no-repeat -9999px -9999px;
 }
