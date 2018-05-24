@@ -142,9 +142,11 @@ function scaleImage(){ // scale and rescale image to be responsive
 };
 
 // resize the image responsive when resizing window
-window.onresize = function(){
-    scaleImage();
-};
+window.addEventListener('resize', function(){
+    if (open == true) {
+        scaleImage();
+    }
+});
 
 // TEXT RELOAD EFFECTS 
 // You can choose between the "Fade from bottom", "Refocus" or "Fade in"
