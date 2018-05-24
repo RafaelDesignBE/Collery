@@ -134,7 +134,7 @@ function scaleImage(){ // scale and rescale image to be responsive
     document.querySelector('.gallery.zoom').style.height = showHeight + 'px';
     document.querySelector('.gallery.zoom').style.left = (viewportWidth-showWidth)/2 + 'px';
     document.querySelector('.gallery.zoom').style.top = (viewportHeight - showHeight)/2 + 'px';
-    document.querySelector('.title').style.top = (viewportHeight - showHeight)/2 + showHeight + 'px';
+    document.querySelector('.title').style.top = (viewportHeight - showHeight)/2 + showHeight + 12 + 'px';
     document.querySelector('.close').style.top = (viewportHeight - showHeight)/2 - 48 + 'px';
     document.querySelector('.closex').style.top = (viewportHeight - showHeight)/2 - 48 + 'px';
     document.querySelector('.close').style.right = ((viewportWidth-showWidth)/2 + 56) + 'px';
@@ -147,6 +147,18 @@ window.addEventListener('resize', function(){
         scaleImage();
     }
 });
+
+window.addEventListener('wheel', function(event) {
+    if (open == true) {
+        console.log("scroll");
+        event.preventDefault();
+    }
+});/* 
+window.addEventListener('DOMMouseScroll', function(event) {
+    if (open == true) {
+        event.preventDefault();
+    }
+})*/
 
 // TEXT RELOAD EFFECTS 
 // You can choose between the "Fade from bottom", "Refocus" or "Fade in"
