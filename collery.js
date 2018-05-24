@@ -87,6 +87,9 @@ function loadImage(){ // load the image and interface
         document.querySelector('.gallery').style.backgroundImage = 'url(' + imgSrc + ')';
         document.querySelector('.cover').style.backgroundColor = imgColor;
         document.querySelector('.title').style.opacity = '0';
+        if(!open){
+            document.querySelector('.close').style.opacity = '0';   
+        }
     
         
         
@@ -137,8 +140,8 @@ function scaleImage(){ // scale and rescale image to be responsive
     document.querySelector('.title').style.top = (viewportHeight - showHeight)/2 + showHeight + 12 + 'px';
     document.querySelector('.close').style.top = (viewportHeight - showHeight)/2 - 48 + 'px';
     document.querySelector('.closex').style.top = (viewportHeight - showHeight)/2 - 48 + 'px';
-    document.querySelector('.close').style.right = ((viewportWidth-showWidth)/2 + 56) + 'px';
-    document.querySelector('.closex').style.right = ((viewportWidth-showWidth)/2) + 'px';
+    document.querySelector('.close').style.right = ((viewportWidth-showWidth)/2 + 40) + 'px';
+    document.querySelector('.closex').style.right = ((viewportWidth-showWidth)/2 - 10) + 'px';
 };
 
 // resize the image responsive when resizing window
@@ -150,7 +153,6 @@ window.addEventListener('resize', function(){
 
 window.addEventListener('wheel', function(event) {
     if (open == true) {
-        console.log("scroll");
         event.preventDefault();
     }
 });/* 
@@ -168,6 +170,8 @@ function textLoad() {
     document.querySelector('.title').style.opacity = "0";
     document.querySelector('.title').style.transform = "translateY(0)";
     document.querySelector('.title').style.transition = "none";
+    
+    
     setTimeout(function() {
         textColor();
         document.querySelector('.title').style.opacity = "0";
@@ -179,6 +183,7 @@ function textLoad() {
         document.querySelector('.title').innerHTML = imgTitle;
         document.querySelector('.title').style.transform = "translateY(0)";
         document.querySelector('.title').style.opacity = "1";
+        document.querySelector('.close').style.opacity = "1";
     }, 300);
 };
 
@@ -190,10 +195,11 @@ function textLoad() {
     }, 300);
     
     setTimeout(function() {
-    textColor();
+        textColor();
         document.querySelector('.title').innerHTML = imgTitle;
         document.querySelector('.title').style.filter = "blur(0)";
         document.querySelector('.title').style.opacity = "1";
+        document.querySelector('.close').style.opacity = "1";
     }, 600);
 };*/
 
@@ -207,6 +213,7 @@ function textLoad() {
     textColor();
         document.querySelector('.title').innerHTML = imgTitle;
         document.querySelector('.title').style.opacity = "1";
+        document.querySelector('.close').style.opacity = "1";
     }, 600);
 };*/
 
