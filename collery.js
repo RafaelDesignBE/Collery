@@ -1,7 +1,11 @@
 // Collery created by Rafael Fernandez (rafaeldesign.be)
 // Created on 05-07-2017
 // create gallery HTML
-document.write('<div class="gallery"> <div class="next"></div><div class="previous"></div></div><div class="title"></div><div class="close" title="Close (Esc)"> Close <div class="closex"> <div class="line1"></div><div class="line2"></div></div></div><div class="next"> <div class="arrow"></div></div><div class="previous"> <div class="arrow"></div></div><div class="cover"></div>');
+var colleryContent = document.createElement("div");
+colleryContent.classList.add('collery-content');
+
+colleryContent.innerHTML = '<div class="collery-content"><div class="gallery"> <div class="next"></div><div class="previous"></div></div><div class="title"></div><div class="close" title="Close (Esc)"> Close <div class="closex"> <div class="line1"></div><div class="line2"></div></div></div><div class="next"> <div class="arrow"></div></div><div class="previous"> <div class="arrow"></div></div><div class="cover"></div></div>';
+document.body.insertBefore(colleryContent, document.body.firstChild);
 
 // define variables
 var index;
